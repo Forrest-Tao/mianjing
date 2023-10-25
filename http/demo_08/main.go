@@ -9,13 +9,17 @@ func myFunc(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "hi")
 }
 
+// 自定义Server 和Servermux
 func main() {
-	//自定义 http.Server
 	server := http.Server{
 		Addr:         ":9090",
 		ReadTimeout:  0,
 		WriteTimeout: 0,
 	}
-	http.HandleFunc("/", myFunc)
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", myFunc)
+	// 其中func ListenAndServe(addr string, handler Handler) error 的handler有实现Handler
+	//http.ListenAndServe(":9090", mux)
+	server.Handler = mux
 	server.ListenAndServe()
 }

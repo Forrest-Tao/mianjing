@@ -4,13 +4,18 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"strings"
+	"net/url"
 )
 
 func main() {
-	//post
-	resp, err := http.Post("http://www.xxx.com/loginRegister/login.do",
-		"application/x-www-form-urlencoded", strings.NewReader("mobile=xxxxxx&isRemeberPwd=1"))
+	//postForm
+
+	postParam := url.Values{
+		"mobile":      {"xxxxxxx"},
+		"isRemberPwd": {"1"},
+	}
+	resp, err := http.PostForm("http://www.xxx.com/loginRegister/login.do",
+		postParam)
 	if err != nil {
 		fmt.Println(err)
 		return
